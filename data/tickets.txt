@@ -1,0 +1,4 @@
+tk1/74/Normal Ticket/false
+tk2/107/Normal Ticket/true
+tk3/74/Student Ticket/false
+tk4/74/Student Ticket/true
