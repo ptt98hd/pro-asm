@@ -1,4 +1,3 @@
-ptt98/pham trung thanh/Director/31
 ptc03/pham thanh cong/Route Manager/30
 ndt03/nguyen duy thang/Route Manager/29
 hhn04/hoang hong nhung/Driver/28
@@ -9,3 +8,4 @@ txd04/tran xuan dong/Normal Employee/14
 tta04/tran thu an/Normal Employee/7
 lqt03/luong quang thang/Normal Employee/5
 ttl74/tran thi loan/Route Manager/1
+ptt98/pham trung thanh/Director/60
