@@ -225,9 +225,8 @@ public final class Employees {
 	public void top5Salary() {
 		System.out.println("\n[ TOP 5 HIGHEST SALARY ]");
 		employees.sort((e1, e2) -> Double.compare(e2.getSalary(), e1.getSalary()));
-		try {
-			FileWriter fw = new FileWriter("data/topSalary.txt");
-			BufferedWriter bw = new BufferedWriter(fw);
+		try (FileWriter fw = new FileWriter("data/topSalary.txt"); BufferedWriter bw = new BufferedWriter(fw);) {
+
 			int count = 5;
 			Employee.displayHeader();
 			for (Employee employee : employees) {
@@ -315,9 +314,8 @@ public final class Employees {
 	}
 
 	public void loadEmployees() {
-		try {
-			FileReader fr = new FileReader("data/employees.txt");
-			BufferedReader br = new BufferedReader(fr);
+		try (FileReader fr = new FileReader("data/employees.txt"); BufferedReader br = new BufferedReader(fr);) {
+
 			String line;
 			while ((line = br.readLine()) != null) {
 				String[] data = line.split("/");
@@ -349,9 +347,7 @@ public final class Employees {
 	}
 
 	public void saveEmployees() {
-		try {
-			FileWriter fw = new FileWriter("data/employees.txt");
-			BufferedWriter bw = new BufferedWriter(fw);
+		try (FileWriter fw = new FileWriter("data/employees.txt"); BufferedWriter bw = new BufferedWriter(fw);) {
 			for (Employee employee : employees) {
 				bw.write(employee.toString());
 				bw.newLine();
