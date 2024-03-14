@@ -242,7 +242,7 @@ public final class Employees {
 			Employee.displaySeparator();
 			bw.close();
 			fw.close();
-		} catch (Exception e) {
+		} catch (IOException e) {
 			System.out.println("Error!");
 		}
 	}
