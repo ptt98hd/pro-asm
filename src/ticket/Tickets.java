@@ -5,22 +5,22 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Tickets {
-	
+
 	private ArrayList<Ticket> tickets;
 	private double basePrice;
-	
+
 	private Scanner scanner;
-	
+
 	// == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
-	public Tickets () {
+	public Tickets() {
 		tickets = new ArrayList<>();
 		basePrice = 1;
 		scanner = new Scanner(System.in);
 		loadTickets();
 	}
-	
+
 	// == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
-	public void add () {
+	public void add() {
 		System.out.println("\n[ ADD A TICKET ]");
 		System.out.print("Enter ID: ");
 		String id = scanner.nextLine();
@@ -29,7 +29,7 @@ public class Tickets {
 			System.out.print("Enter ID: ");
 			id = scanner.nextLine();
 		}
-		
+
 		int route = 0;
 		while (route < 1) {
 			try {
@@ -39,7 +39,7 @@ public class Tickets {
 				System.out.println("Invaled route!");
 			}
 		}
-		
+
 		switch (types()) {
 			case "Normal Ticket":
 				tickets.add(new NormalTicket(id, route, roundTrip(), basePrice));
@@ -61,8 +61,8 @@ public class Tickets {
 		}
 		saveTickets();
 	}
-	
-	public void remove () {
+
+	public void remove() {
 		System.out.println("\n[ REMOVE A TICKET ]");
 		System.out.print("Enter ID: ");
 		String id = scanner.nextLine();
@@ -74,8 +74,8 @@ public class Tickets {
 		tickets.remove(findById(id));
 		saveTickets();
 	}
-	
-	public void update () {
+
+	public void update() {
 		System.out.println("\n[ UPDATE A TICKET ]");
 		System.out.print("Enter ID: ");
 		String id = scanner.nextLine();
@@ -84,7 +84,7 @@ public class Tickets {
 			System.out.print("Enter ID: ");
 			id = scanner.nextLine();
 		}
-		
+
 		int route = 0;
 		while (route < 1) {
 			try {
@@ -94,7 +94,7 @@ public class Tickets {
 				System.out.println("Invaled route!");
 			}
 		}
-		
+
 		switch (types()) {
 			case "Normal Ticket":
 				tickets.add(new NormalTicket(id, route, roundTrip(), basePrice));
@@ -117,9 +117,9 @@ public class Tickets {
 		tickets.remove(findById(id));
 		saveTickets();
 	}
-	
+
 	// == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
-	public void listAll () {
+	public void listAll() {
 		System.out.println("\n[ LIST ALL TICKETS ]");
 		Ticket.displayHeader();
 		for (Ticket ticket : tickets) {
@@ -127,8 +127,8 @@ public class Tickets {
 		}
 		Ticket.displaySeparator();
 	}
-	
-	public void listNormalTicket () {
+
+	public void listNormalTicket() {
 		System.out.println("\n[ LIST NORMAL TICKETS ]");
 		Ticket.displayHeader();
 		for (Ticket ticket : tickets) {
@@ -138,8 +138,8 @@ public class Tickets {
 		}
 		Ticket.displaySeparator();
 	}
-	
-	public void listStudentTicket () {
+
+	public void listStudentTicket() {
 		System.out.println("\n[ LIST STUDENT TICKETS ]");
 		Ticket.displayHeader();
 		for (Ticket ticket : tickets) {
@@ -149,8 +149,8 @@ public class Tickets {
 		}
 		Ticket.displaySeparator();
 	}
-	
-	public void listSeniorTicket () {
+
+	public void listSeniorTicket() {
 		System.out.println("\n[ LIST SENIOR TICKETS ]");
 		Ticket.displayHeader();
 		for (Ticket ticket : tickets) {
@@ -160,8 +160,8 @@ public class Tickets {
 		}
 		Ticket.displaySeparator();
 	}
-	
-	public void listDailyTicket () {
+
+	public void listDailyTicket() {
 		System.out.println("\n[ LIST DAILY TICKETS ]");
 		Ticket.displayHeader();
 		for (Ticket ticket : tickets) {
@@ -171,8 +171,8 @@ public class Tickets {
 		}
 		Ticket.displaySeparator();
 	}
-	
-	public void listMonthlyTicket () {
+
+	public void listMonthlyTicket() {
 		System.out.println("\n[ LIST ALL TICKETS ]");
 		Ticket.displayHeader();
 		for (Ticket ticket : tickets) {
@@ -182,9 +182,9 @@ public class Tickets {
 		}
 		Ticket.displaySeparator();
 	}
-	
+
 	// == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
-	public void sortByPriceAcd () {
+	public void sortByPriceAcd() {
 		System.out.println("\n[ SORT BY PRICE ASCENDING ]");
 		tickets.sort((t1, t2) -> Double.compare(t1.getPrice(), t2.getPrice()));
 		Ticket.displayHeader();
@@ -193,8 +193,8 @@ public class Tickets {
 		}
 		Ticket.displaySeparator();
 	}
-	
-	public void sortByPriceDcd () {
+
+	public void sortByPriceDcd() {
 		System.out.println("\n[ SORT BY PRICE DESCENDING ]");
 		tickets.sort((t1, t2) -> Double.compare(t2.getPrice(), t1.getPrice()));
 		Ticket.displayHeader();
@@ -203,15 +203,14 @@ public class Tickets {
 		}
 		Ticket.displaySeparator();
 	}
-	
-	public void top5LowestPrice () {
+
+	public void top5LowestPrice() {
 		System.out.println("\n[ TOP 5 LOWEST PRICE TICKETS ]");
 		tickets.sort((t1, t2) -> Double.compare(t1.getPrice(), t2.getPrice()));
 		Ticket.displayHeader();
-		
+
 		try (
-			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("data/topPrice.dat"))
-		) {
+			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("data/topPrice.dat"))) {
 			for (int i = 0; i < 5; i++) {
 				tickets.get(i).display();
 				oos.writeObject(tickets.get(i));
@@ -220,8 +219,8 @@ public class Tickets {
 		}
 		Ticket.displaySeparator();
 	}
-	
-	public void totalSold () {
+
+	public void totalSold() {
 		System.out.println("\n[ TOTAL SOLD TICKET ]");
 		double total = 0;
 		for (Ticket ticket : tickets) {
@@ -229,9 +228,9 @@ public class Tickets {
 		}
 		System.out.println(total);
 	}
-	
+
 	// == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
-	public Ticket findById (String id) {
+	public Ticket findById(String id) {
 		for (Ticket ticket : tickets) {
 			if (ticket.getId().equals(id)) {
 				return ticket;
@@ -239,8 +238,8 @@ public class Tickets {
 		}
 		return null;
 	}
-	
-	public String types () {
+
+	public String types() {
 		System.out.println("Available types: ");
 		System.out.println("   [01] Normal Ticket");
 		System.out.println("   [02] Student Ticket");
@@ -248,7 +247,7 @@ public class Tickets {
 		System.out.println("   [04] Daily Ticket");
 		System.out.println("   [05] Monthly Ticket");
 		int choice = -1;
-		while (choice < 0 || choice > 1) {
+		while (choice < 0 || choice > 5) {
 			try {
 				System.out.print("Enter type: ");
 				choice = Integer.parseInt(scanner.nextLine());
@@ -271,8 +270,8 @@ public class Tickets {
 				return null;
 		}
 	}
-	
-	public boolean roundTrip () {
+
+	public boolean roundTrip() {
 		System.out.println("Round Trip?");
 		System.out.printf("%-10s %-10s\n", "[0] No", "[1] Yes");
 		int choice = -1;
@@ -286,8 +285,8 @@ public class Tickets {
 		}
 		return choice == 1;
 	}
-	
-	public void loadTickets () {
+
+	public void loadTickets() {
 		try {
 			FileReader fr = new FileReader("data/tickets.txt");
 			BufferedReader br = new BufferedReader(fr);
@@ -343,8 +342,8 @@ public class Tickets {
 			System.out.println("Error!");
 		}
 	}
-	
-	public void saveTickets () {
+
+	public void saveTickets() {
 		try {
 			FileWriter fw = new FileWriter("data/tickets.txt");
 			BufferedWriter bw = new BufferedWriter(fw);
