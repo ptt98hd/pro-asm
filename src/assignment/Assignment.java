@@ -1,14 +1,13 @@
 package assignment;
 
 import employee.Employees;
-import ticket.Tickets;
-
 import java.io.IOException;
 import java.util.Scanner;
+import ticket.Tickets;
 
 public class Assignment {
-	
-	public static void main (String[] args) throws IOException {
+
+	public static void main(String[] args) throws IOException {
 		Employees employees = new Employees();
 		Tickets tickets = new Tickets();
 		Scanner scanner = new Scanner(System.in);
@@ -132,8 +131,8 @@ public class Assignment {
 			}
 		}
 	}
-	
-	public static int choice (Scanner scanner) {
+
+	public static int choice(Scanner scanner) {
 		System.out.println("\n[ MENU ]");
 		separator();
 		System.out.printf(
@@ -191,22 +190,22 @@ public class Assignment {
 			try {
 				System.out.print("Your Choice: ");
 				choice = Integer.parseInt(scanner.nextLine());
-			} catch (Exception e) {
+			} catch (NumberFormatException e) {
 				System.out.println("Invalid Choice!");
 			}
 		}
 		return choice;
 	}
-	
-	public static void enter (Scanner scanner) {
+
+	public static void enter(Scanner scanner) {
 		System.out.print("Press [Enter] to continute...");
 		try {
 			scanner.nextLine();
 		} catch (Exception e) {
 		}
 	}
-	
-	public static void separator () {
+
+	public static void separator() {
 		System.out.printf(
 			"+-%-30s-+-%-30s-+%n",
 			"------------------------------", "------------------------------"
