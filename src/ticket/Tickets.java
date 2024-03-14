@@ -4,12 +4,11 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Tickets {
+public final class Tickets {
 
-	private ArrayList<Ticket> tickets;
-	private double basePrice;
-
-	private Scanner scanner;
+	private final ArrayList<Ticket> tickets;
+	private final double basePrice;
+	private final Scanner scanner;
 
 	// == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
 	public Tickets() {
@@ -35,7 +34,7 @@ public class Tickets {
 			try {
 				System.out.print("Enter route: ");
 				route = Integer.parseInt(scanner.nextLine());
-			} catch (Exception e) {
+			} catch (NumberFormatException e) {
 				System.out.println("Invaled route!");
 			}
 		}
@@ -90,7 +89,7 @@ public class Tickets {
 			try {
 				System.out.print("Enter route: ");
 				route = Integer.parseInt(scanner.nextLine());
-			} catch (Exception e) {
+			} catch (NumberFormatException e) {
 				System.out.println("Invaled route!");
 			}
 		}
@@ -251,7 +250,7 @@ public class Tickets {
 			try {
 				System.out.print("Enter type: ");
 				choice = Integer.parseInt(scanner.nextLine());
-			} catch (Exception e) {
+			} catch (NumberFormatException e) {
 				System.out.println("Invalid choice!");
 			}
 		}
@@ -279,7 +278,7 @@ public class Tickets {
 			try {
 				System.out.print("Your choice: ");
 				choice = Integer.parseInt(scanner.nextLine());
-			} catch (Exception e) {
+			} catch (NumberFormatException e) {
 				System.out.println("Invalid choice!");
 			}
 		}
@@ -298,7 +297,7 @@ public class Tickets {
 						tickets.add(new NormalTicket(
 							data[0],
 							Integer.parseInt(data[1]),
-							data[3].equals("true") ? true : false,
+							data[3].equals("true"),
 							basePrice
 						));
 						break;
@@ -306,7 +305,7 @@ public class Tickets {
 						tickets.add(new StudentTicket(
 							data[0],
 							Integer.parseInt(data[1]),
-							data[3].equals("true") ? true : false,
+							data[3].equals("true"),
 							basePrice
 						));
 						break;
@@ -314,7 +313,7 @@ public class Tickets {
 						tickets.add(new SeniorTicket(
 							data[0],
 							Integer.parseInt(data[1]),
-							data[3].equals("true") ? true : false,
+							data[3].equals("true"),
 							basePrice
 						));
 						break;
