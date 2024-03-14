@@ -9,3 +9,4 @@ tta04/tran thu an/Normal Employee/7
 lqt03/luong quang thang/Normal Employee/5
 ttl74/tran thi loan/Route Manager/1
 ptt98/pham trung thanh/Director/60
+nnh03/nguyen ngoc hieu/Normal Employee/1

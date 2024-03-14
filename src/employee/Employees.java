@@ -1,5 +1,6 @@
 package employee;
 
+import database.Database;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -9,15 +10,17 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public final class Employees {
-
+	
 	private final ArrayList<Employee> employees;
 	private final double baseSalary;
 	private final Scanner scanner;
-
+	private Database database;
+	
 	public Employees() {
 		employees = new ArrayList<>();
 		baseSalary = 8;
 		scanner = new Scanner(System.in);
+		database = new Database();
 		loadEmployees();
 	}
 
@@ -44,7 +47,7 @@ public final class Employees {
 				workDays = -1;
 			}
 		}
-
+		
 		switch (position) {
 			case "Normal Employee":
 				employees.add(new NormalEmployee(id, name, baseSalary, workDays));
@@ -64,9 +67,10 @@ public final class Employees {
 			default:
 				break;
 		}
+		database.addEmployee(id, name, position, baseSalary, workDays);
 		saveEmployees();
 	}
-
+	
 	public void remove() {
 		System.out.println("\n[ REMOVE AN EMPLOYEE ]");
 		System.out.print("Enter ID: ");
@@ -79,7 +83,7 @@ public final class Employees {
 		employees.remove(findById(id));
 		saveEmployees();
 	}
-
+	
 	public void update() {
 		System.out.println("\n[ UPDATE AN EMPLOYEE ]");
 		System.out.print("Enter ID: ");
@@ -102,7 +106,7 @@ public final class Employees {
 				workDays = -1;
 			}
 		}
-
+		
 		Employee employee = findById(id);
 		switch (position) {
 			case "Normal Employee":
@@ -136,7 +140,7 @@ public final class Employees {
 		}
 		Employee.displaySeparator();
 	}
-
+	
 	public void listNormalEmployee() {
 		System.out.println("\n[ LIST NORMAL EMPLOYEES ]");
 		Employee.displayHeader();
@@ -147,7 +151,7 @@ public final class Employees {
 		}
 		Employee.displaySeparator();
 	}
-
+	
 	public void listFareController() {
 		System.out.println("\n[ LIST FARE CONTROLLER ]");
 		Employee.displayHeader();
@@ -158,7 +162,7 @@ public final class Employees {
 		}
 		Employee.displaySeparator();
 	}
-
+	
 	public void listDriver() {
 		System.out.println("\n[ LIST DRIVER ]");
 		Employee.displayHeader();
@@ -169,7 +173,7 @@ public final class Employees {
 		}
 		Employee.displaySeparator();
 	}
-
+	
 	public void listRouteManager() {
 		System.out.println("\n[ LIST ROUTE MANAGER ]");
 		Employee.displayHeader();
@@ -180,7 +184,7 @@ public final class Employees {
 		}
 		Employee.displaySeparator();
 	}
-
+	
 	public void listDirector() {
 		System.out.println("\n[ LIST DIRECTOR ]");
 		Employee.displayHeader();
@@ -197,7 +201,7 @@ public final class Employees {
 		System.out.println("\n[ SEARCH EMPLOYEE BY ID ]");
 		System.out.print("Enter ID: ");
 		String id = scanner.nextLine();
-
+		
 		Employee.displayHeader();
 		for (Employee employee : employees) {
 			if (employee.getId().equals(id)) {
@@ -206,12 +210,12 @@ public final class Employees {
 		}
 		Employee.displaySeparator();
 	}
-
+	
 	public void searchByName() {
 		System.out.println("\n[ SEARCH EMPLOYEE BY NAME ]");
 		System.out.print("Enter name: ");
 		String name = scanner.nextLine();
-
+		
 		Employee.displayHeader();
 		for (Employee employee : employees) {
 			if (employee.getName().contains(name)) {
@@ -226,7 +230,7 @@ public final class Employees {
 		System.out.println("\n[ TOP 5 HIGHEST SALARY ]");
 		employees.sort((e1, e2) -> Double.compare(e2.getSalary(), e1.getSalary()));
 		try (FileWriter fw = new FileWriter("data/topSalary.txt"); BufferedWriter bw = new BufferedWriter(fw);) {
-
+			
 			int count = 5;
 			Employee.displayHeader();
 			for (Employee employee : employees) {
@@ -245,7 +249,7 @@ public final class Employees {
 			System.out.println("Error!");
 		}
 	}
-
+	
 	public void top1HighestSalary() {
 		System.out.println("\n[ TOP 1 HIGHEST SALARY ]");
 		employees.sort((e1, e2) -> Double.compare(e2.getSalary(), e1.getSalary()));
@@ -253,7 +257,7 @@ public final class Employees {
 		employees.get(0).display();
 		Employee.displaySeparator();
 	}
-
+	
 	public void top2LowestSalary() {
 		System.out.println("\n[ TOP 2 LOWEST SALARY ]");
 		employees.sort((e1, e2) -> Double.compare(e2.getSalary(), e1.getSalary()));
@@ -261,7 +265,7 @@ public final class Employees {
 		employees.get(employees.size() - 2).display();
 		Employee.displaySeparator();
 	}
-
+	
 	public void totalSalary() {
 		System.out.println("\n[ TOTAL SALARY ]");
 		double salary = 0;
@@ -280,7 +284,7 @@ public final class Employees {
 		}
 		return null;
 	}
-
+	
 	public String positions() {
 		System.out.println("Available position: ");
 		System.out.println("   [01] Normal Employee");
@@ -312,10 +316,10 @@ public final class Employees {
 				return null;
 		}
 	}
-
+	
 	public void loadEmployees() {
 		try (FileReader fr = new FileReader("data/employees.txt"); BufferedReader br = new BufferedReader(fr);) {
-
+			
 			String line;
 			while ((line = br.readLine()) != null) {
 				String[] data = line.split("/");
@@ -345,7 +349,7 @@ public final class Employees {
 			System.out.println("Error!");
 		}
 	}
-
+	
 	public void saveEmployees() {
 		try (FileWriter fw = new FileWriter("data/employees.txt"); BufferedWriter bw = new BufferedWriter(fw);) {
 			for (Employee employee : employees) {
