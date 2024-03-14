@@ -286,9 +286,7 @@ public final class Tickets {
 	}
 
 	public void loadTickets() {
-		try {
-			FileReader fr = new FileReader("data/tickets.txt");
-			BufferedReader br = new BufferedReader(fr);
+		try (FileReader fr = new FileReader("data/tickets.txt"); BufferedReader br = new BufferedReader(fr)) {
 			String line;
 			while ((line = br.readLine()) != null) {
 				String[] data = line.split("/");
@@ -335,17 +333,14 @@ public final class Tickets {
 						break;
 				}
 			}
-			br.close();
-			fr.close();
 		} catch (IOException | NumberFormatException e) {
 			System.out.println("Error!");
 		}
 	}
 
 	public void saveTickets() {
-		try {
-			FileWriter fw = new FileWriter("data/tickets.txt");
-			BufferedWriter bw = new BufferedWriter(fw);
+		try (FileWriter fw = new FileWriter("data/tickets.txt"); BufferedWriter bw = new BufferedWriter(fw);) {
+
 			for (Ticket ticket : tickets) {
 				bw.write(ticket.toString());
 				bw.newLine();
