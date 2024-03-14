@@ -4,14 +4,15 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Employees {
+public final class Employees {
 
-	private ArrayList<Employee> employees;
-	private double baseSalary;
-	private Scanner scanner;
+	private final ArrayList<Employee> employees;
+	private final double baseSalary;
+	private final Scanner scanner;
 
 	public Employees() {
 		employees = new ArrayList<>();
@@ -38,7 +39,7 @@ public class Employees {
 			try {
 				System.out.print("Enter work days: ");
 				workDays = Integer.parseInt(scanner.nextLine());
-			} catch (Exception e) {
+			} catch (NumberFormatException e) {
 				System.out.println("Invalid Work Days!");
 				workDays = -1;
 			}
@@ -96,7 +97,7 @@ public class Employees {
 			try {
 				System.out.print("Enter work days: ");
 				workDays = Integer.parseInt(scanner.nextLine());
-			} catch (Exception e) {
+			} catch (NumberFormatException e) {
 				System.out.println("Invalid work days!");
 				workDays = -1;
 			}
@@ -293,7 +294,7 @@ public class Employees {
 			try {
 				System.out.print("Enter position: ");
 				choice = Integer.parseInt(scanner.nextLine());
-			} catch (Exception e) {
+			} catch (NumberFormatException e) {
 				System.out.println("Invalid choice!");
 			}
 		}
@@ -342,7 +343,7 @@ public class Employees {
 			}
 			br.close();
 			fr.close();
-		} catch (Exception e) {
+		} catch (IOException | NumberFormatException e) {
 			System.out.println("Error!");
 		}
 	}
@@ -357,7 +358,7 @@ public class Employees {
 			}
 			bw.close();
 			fw.close();
-		} catch (Exception e) {
+		} catch (IOException e) {
 			System.out.println("Error!");
 		}
 	}
