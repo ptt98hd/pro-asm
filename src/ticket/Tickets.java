@@ -337,7 +337,7 @@ public final class Tickets {
 			}
 			br.close();
 			fr.close();
-		} catch (Exception e) {
+		} catch (IOException | NumberFormatException e) {
 			System.out.println("Error!");
 		}
 	}
@@ -352,7 +352,7 @@ public final class Tickets {
 			}
 			bw.close();
 			fw.close();
-		} catch (Exception e) {
+		} catch (IOException e) {
 			System.out.println("Error!");
 		}
 	}
