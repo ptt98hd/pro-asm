@@ -1,5 +1,6 @@
 package employee;
 
+import assignment.IFunctions;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -8,7 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public final class Employees {
+public final class Employees extends ArrayList<Employee> implements IFunctions {
 
 	private final ArrayList<Employee> employees;
 	private final double baseSalary;
@@ -18,10 +19,14 @@ public final class Employees {
 		employees = new ArrayList<>();
 		baseSalary = 8;
 		scanner = new Scanner(System.in);
-		loadEmployees();
+		load();
 	}
 
 	// == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
+	/**
+	 *
+	 */
+	@Override
 	public void add() {
 		System.out.println("\n[ ADD AN EMPLOYEE ]");
 		System.out.print("Enter ID: ");
@@ -64,9 +69,13 @@ public final class Employees {
 			default:
 				break;
 		}
-		saveEmployees();
+		save();
 	}
 
+	/**
+	 *
+	 */
+	@Override
 	public void remove() {
 		System.out.println("\n[ REMOVE AN EMPLOYEE ]");
 		System.out.print("Enter ID: ");
@@ -77,9 +86,13 @@ public final class Employees {
 			id = scanner.nextLine();
 		}
 		employees.remove(findById(id));
-		saveEmployees();
+		save();
 	}
 
+	/**
+	 *
+	 */
+	@Override
 	public void update() {
 		System.out.println("\n[ UPDATE AN EMPLOYEE ]");
 		System.out.print("Enter ID: ");
@@ -124,10 +137,14 @@ public final class Employees {
 				break;
 		}
 		employees.remove(employee);
-		saveEmployees();
+		save();
 	}
 
 	// == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
+	/**
+	 *
+	 */
+	@Override
 	public void listAll() {
 		System.out.println("\n[ LIST ALL EMPLOYEES ]");
 		Employee.displayHeader();
@@ -313,7 +330,11 @@ public final class Employees {
 		}
 	}
 
-	public void loadEmployees() {
+	/**
+	 *
+	 */
+	@Override
+	public void load() {
 		try (FileReader fr = new FileReader("data/employees.txt"); BufferedReader br = new BufferedReader(fr);) {
 
 			String line;
@@ -346,7 +367,11 @@ public final class Employees {
 		}
 	}
 
-	public void saveEmployees() {
+	/**
+	 *
+	 */
+	@Override
+	public void save() {
 		try (FileWriter fw = new FileWriter("data/employees.txt"); BufferedWriter bw = new BufferedWriter(fw);) {
 			for (Employee employee : employees) {
 				bw.write(employee.toString());

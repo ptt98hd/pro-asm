@@ -1,10 +1,11 @@
 package ticket;
 
+import assignment.IFunctions;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public final class Tickets {
+public final class Tickets implements IFunctions {
 
 	private final ArrayList<Ticket> tickets;
 	private final double basePrice;
@@ -15,10 +16,14 @@ public final class Tickets {
 		tickets = new ArrayList<>();
 		basePrice = 1;
 		scanner = new Scanner(System.in);
-		loadTickets();
+		load();
 	}
 
 	// == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
+	/**
+	 *
+	 */
+	@Override
 	public void add() {
 		System.out.println("\n[ ADD A TICKET ]");
 		System.out.print("Enter ID: ");
@@ -58,9 +63,13 @@ public final class Tickets {
 			default:
 				break;
 		}
-		saveTickets();
+		save();
 	}
 
+	/**
+	 *
+	 */
+	@Override
 	public void remove() {
 		System.out.println("\n[ REMOVE A TICKET ]");
 		System.out.print("Enter ID: ");
@@ -71,9 +80,13 @@ public final class Tickets {
 			id = scanner.nextLine();
 		}
 		tickets.remove(findById(id));
-		saveTickets();
+		save();
 	}
 
+	/**
+	 *
+	 */
+	@Override
 	public void update() {
 		System.out.println("\n[ UPDATE A TICKET ]");
 		System.out.print("Enter ID: ");
@@ -114,10 +127,14 @@ public final class Tickets {
 				break;
 		}
 		tickets.remove(findById(id));
-		saveTickets();
+		save();
 	}
 
 	// == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
+	/**
+	 *
+	 */
+	@Override
 	public void listAll() {
 		System.out.println("\n[ LIST ALL TICKETS ]");
 		Ticket.displayHeader();
@@ -285,7 +302,11 @@ public final class Tickets {
 		return choice == 1;
 	}
 
-	public void loadTickets() {
+	/**
+	 *
+	 */
+	@Override
+	public void load() {
 		try (FileReader fr = new FileReader("data/tickets.txt"); BufferedReader br = new BufferedReader(fr)) {
 			String line;
 			while ((line = br.readLine()) != null) {
@@ -338,7 +359,11 @@ public final class Tickets {
 		}
 	}
 
-	public void saveTickets() {
+	/**
+	 *
+	 */
+	@Override
+	public void save() {
 		try (FileWriter fw = new FileWriter("data/tickets.txt"); BufferedWriter bw = new BufferedWriter(fw);) {
 
 			for (Ticket ticket : tickets) {
