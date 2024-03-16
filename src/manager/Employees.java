@@ -1,5 +1,6 @@
-package assignment;
+package manager;
 
+import assignment.Utils;
 import employee.*;
 import java.io.*;
 import java.util.ArrayList;
@@ -248,7 +249,7 @@ public final class Employees extends ArrayList<Employee> implements IFunctions {
 			String line;
 			while ((line = br.readLine()) != null) {
 				String[] data = line.split("/");
-				Integer postion = Integer.parseInt(data[2]);
+				Integer postion = Integer.valueOf(data[2]);
 				switch (postion) {
 					case 1:
 						employees.add(new NormalEmployee(data[0], data[1], baseSalary, Integer.parseInt(data[3]), data[4]));
