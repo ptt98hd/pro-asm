@@ -1,69 +1,55 @@
-package employee;
+package assignment;
 
-import assignment.IFunctions;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import employee.*;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public final class Employees extends ArrayList<Employee> implements IFunctions {
-
+	
 	private final ArrayList<Employee> employees;
 	private final double baseSalary;
 	private final Scanner scanner;
-
-	public Employees() {
+	
+	public Employees () {
 		employees = new ArrayList<>();
 		baseSalary = 8;
 		scanner = new Scanner(System.in);
 		load();
 	}
-
+	
 	// == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
+	
 	/**
 	 *
 	 */
 	@Override
-	public void add() {
+	public void add () {
 		System.out.println("\n[ ADD AN EMPLOYEE ]");
-		System.out.print("Enter ID: ");
-		String id = scanner.nextLine();
+		String id = Utils.getString("Enter ID: ");
 		while (findById(id) != null) {
 			System.out.println("ID already exists!");
-			System.out.print("Enter ID: ");
-			id = scanner.nextLine();
+			id = Utils.getString("Enter ID: ");
 		}
-		System.out.print("Enter name: ");
-		String name = scanner.nextLine();
-		String position = positions();
-		int workDays = -1;
-		while (workDays < 0) {
-			try {
-				System.out.print("Enter work days: ");
-				workDays = Integer.parseInt(scanner.nextLine());
-			} catch (NumberFormatException e) {
-				System.out.println("Invalid Work Days!");
-				workDays = -1;
-			}
-		}
-
+		String name = Utils.getString("Enter name: ");
+		int position = Utils.getKey("Enter Position: ", Employee.POSITIONS);
+		int workDays = Utils.getInt("Enter worked days: ");
+		
 		switch (position) {
-			case "Normal Employee":
+			case 1:
 				employees.add(new NormalEmployee(id, name, baseSalary, workDays));
 				break;
-			case "Fare Control":
+			case 2:
 				employees.add(new FareController(id, name, baseSalary, workDays));
 				break;
-			case "Driver":
+			case 3:
 				employees.add(new Driver(id, name, baseSalary, workDays));
 				break;
-			case "Route Manager":
+			case 4:
 				employees.add(new RouteManager(id, name, baseSalary, workDays));
 				break;
-			case "Director":
+			case 5:
 				employees.add(new Director(id, name, baseSalary, workDays));
 				break;
 			default:
@@ -71,12 +57,12 @@ public final class Employees extends ArrayList<Employee> implements IFunctions {
 		}
 		save();
 	}
-
+	
 	/**
 	 *
 	 */
 	@Override
-	public void remove() {
+	public void remove () {
 		System.out.println("\n[ REMOVE AN EMPLOYEE ]");
 		System.out.print("Enter ID: ");
 		String id = scanner.nextLine();
@@ -88,49 +74,37 @@ public final class Employees extends ArrayList<Employee> implements IFunctions {
 		employees.remove(findById(id));
 		save();
 	}
-
+	
 	/**
 	 *
 	 */
 	@Override
-	public void update() {
+	public void update () {
 		System.out.println("\n[ UPDATE AN EMPLOYEE ]");
-		System.out.print("Enter ID: ");
-		String id = scanner.nextLine();
+		String id = Utils.getString("Enter ID: ");
 		while (findById(id) == null) {
 			System.out.println("Invalid ID!");
-			System.out.print("Enter ID: ");
-			id = scanner.nextLine();
+			id = Utils.getString("Enter ID: ");
 		}
-		System.out.print("Enter name: ");
-		String name = scanner.nextLine();
-		String position = positions();
-		int workDays = -1;
-		while (workDays < 0) {
-			try {
-				System.out.print("Enter work days: ");
-				workDays = Integer.parseInt(scanner.nextLine());
-			} catch (NumberFormatException e) {
-				System.out.println("Invalid work days!");
-				workDays = -1;
-			}
-		}
-
+		String name = Utils.getString("Enter name: ");
+		int position = Utils.getKey("Enter Position: ", Employee.POSITIONS);
+		int workDays = Utils.getPositiveInt("Enter Worked Days: ");
+		
 		Employee employee = findById(id);
 		switch (position) {
-			case "Normal Employee":
+			case 1:
 				employees.add(new NormalEmployee(id, name, baseSalary, workDays));
 				break;
-			case "Fare Controller":
+			case 2:
 				employees.add(new FareController(id, name, baseSalary, workDays));
 				break;
-			case "Driver":
+			case 3:
 				employees.add(new Driver(id, name, baseSalary, workDays));
 				break;
-			case "Route Manager":
+			case 4:
 				employees.add(new RouteManager(id, name, baseSalary, workDays));
 				break;
-			case "Director":
+			case 5:
 				employees.add(new Director(id, name, baseSalary, workDays));
 				break;
 			default:
@@ -139,13 +113,14 @@ public final class Employees extends ArrayList<Employee> implements IFunctions {
 		employees.remove(employee);
 		save();
 	}
-
+	
 	// == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
+	
 	/**
 	 *
 	 */
 	@Override
-	public void listAll() {
+	public void listAll () {
 		System.out.println("\n[ LIST ALL EMPLOYEES ]");
 		Employee.displayHeader();
 		for (Employee employee : employees) {
@@ -153,68 +128,68 @@ public final class Employees extends ArrayList<Employee> implements IFunctions {
 		}
 		Employee.displaySeparator();
 	}
-
-	public void listNormalEmployee() {
+	
+	public void listNormalEmployee () {
 		System.out.println("\n[ LIST NORMAL EMPLOYEES ]");
 		Employee.displayHeader();
 		for (Employee employee : employees) {
-			if (employee.getPosition().equals("Normal Employee")) {
+			if (employee.getPosition() == 1) {
 				employee.display();
 			}
 		}
 		Employee.displaySeparator();
 	}
-
-	public void listFareController() {
+	
+	public void listFareController () {
 		System.out.println("\n[ LIST FARE CONTROLLER ]");
 		Employee.displayHeader();
 		for (Employee employee : employees) {
-			if (employee.getPosition().equals("Fare Controller")) {
+			if (employee.getPosition() == 2) {
 				employee.display();
 			}
 		}
 		Employee.displaySeparator();
 	}
-
-	public void listDriver() {
+	
+	public void listDriver () {
 		System.out.println("\n[ LIST DRIVER ]");
 		Employee.displayHeader();
 		for (Employee employee : employees) {
-			if (employee.getPosition().equals("Driver")) {
+			if (employee.getPosition() == 3) {
 				employee.display();
 			}
 		}
 		Employee.displaySeparator();
 	}
-
-	public void listRouteManager() {
+	
+	public void listRouteManager () {
 		System.out.println("\n[ LIST ROUTE MANAGER ]");
 		Employee.displayHeader();
 		for (Employee employee : employees) {
-			if (employee.getPosition().equals("Route Manager")) {
+			if (employee.getPosition() == 4) {
 				employee.display();
 			}
 		}
 		Employee.displaySeparator();
 	}
-
-	public void listDirector() {
+	
+	public void listDirector () {
 		System.out.println("\n[ LIST DIRECTOR ]");
 		Employee.displayHeader();
 		for (Employee employee : employees) {
-			if (employee.getPosition().equals("Director")) {
+			if (employee.getPosition() == 5) {
 				employee.display();
 			}
 		}
 		Employee.displaySeparator();
 	}
-
+	
 	// == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
-	public void searchById() {
+	public void searchById () {
 		System.out.println("\n[ SEARCH EMPLOYEE BY ID ]");
 		System.out.print("Enter ID: ");
 		String id = scanner.nextLine();
-
+		
 		Employee.displayHeader();
 		for (Employee employee : employees) {
 			if (employee.getId().equals(id)) {
@@ -223,12 +198,12 @@ public final class Employees extends ArrayList<Employee> implements IFunctions {
 		}
 		Employee.displaySeparator();
 	}
-
-	public void searchByName() {
+	
+	public void searchByName () {
 		System.out.println("\n[ SEARCH EMPLOYEE BY NAME ]");
 		System.out.print("Enter name: ");
 		String name = scanner.nextLine();
-
+		
 		Employee.displayHeader();
 		for (Employee employee : employees) {
 			if (employee.getName().contains(name)) {
@@ -237,19 +212,21 @@ public final class Employees extends ArrayList<Employee> implements IFunctions {
 		}
 		Employee.displaySeparator();
 	}
-
+	
 	// == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
-	public void top5Salary() {
+	public void top5Salary () {
 		System.out.println("\n[ TOP 5 HIGHEST SALARY ]");
 		employees.sort((e1, e2) -> Double.compare(e2.getSalary(), e1.getSalary()));
-		try (FileWriter fw = new FileWriter("data/topSalary.txt"); BufferedWriter bw = new BufferedWriter(fw);) {
-
+		try (
+			FileWriter fw = new FileWriter("data/topSalary.txt");
+			BufferedWriter bw = new BufferedWriter(fw)
+		) {
 			int count = 5;
 			Employee.displayHeader();
 			for (Employee employee : employees) {
+				employee.display();
 				bw.write(employee.toString());
 				bw.newLine();
-				employee.display();
 				count--;
 				if (count == 0) {
 					break;
@@ -262,24 +239,24 @@ public final class Employees extends ArrayList<Employee> implements IFunctions {
 			System.out.println("Error!");
 		}
 	}
-
-	public void top1HighestSalary() {
+	
+	public void top1HighestSalary () {
 		System.out.println("\n[ TOP 1 HIGHEST SALARY ]");
 		employees.sort((e1, e2) -> Double.compare(e2.getSalary(), e1.getSalary()));
 		Employee.displayHeader();
 		employees.get(0).display();
 		Employee.displaySeparator();
 	}
-
-	public void top2LowestSalary() {
+	
+	public void top2LowestSalary () {
 		System.out.println("\n[ TOP 2 LOWEST SALARY ]");
 		employees.sort((e1, e2) -> Double.compare(e2.getSalary(), e1.getSalary()));
 		Employee.displayHeader();
 		employees.get(employees.size() - 2).display();
 		Employee.displaySeparator();
 	}
-
-	public void totalSalary() {
+	
+	public void totalSalary () {
 		System.out.println("\n[ TOTAL SALARY ]");
 		double salary = 0;
 		for (Employee employee : employees) {
@@ -287,9 +264,11 @@ public final class Employees extends ArrayList<Employee> implements IFunctions {
 		}
 		System.out.println(salary);
 	}
-
+	
 	// == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
-	public Employee findById(String id) {
+	
+	@Override
+	public Employee findById (String id) {
 		for (Employee employee : employees) {
 			if (employee.getId().equals(id)) {
 				return employee;
@@ -297,67 +276,37 @@ public final class Employees extends ArrayList<Employee> implements IFunctions {
 		}
 		return null;
 	}
-
-	public String positions() {
-		System.out.println("Available position: ");
-		System.out.println("   [01] Normal Employee");
-		System.out.println("   [02] Fare Controller");
-		System.out.println("   [03] Driver");
-		System.out.println("   [04] Route Manager");
-		System.out.println("   [05] Director");
-		int choice = 0;
-		while (choice < 1 || choice > 5) {
-			try {
-				System.out.print("Enter position: ");
-				choice = Integer.parseInt(scanner.nextLine());
-			} catch (NumberFormatException e) {
-				System.out.println("Invalid choice!");
-			}
-		}
-		switch (choice) {
-			case 1:
-				return "Normal Employee";
-			case 2:
-				return "Fare Controller";
-			case 3:
-				return "Driver";
-			case 4:
-				return "Route Manager";
-			case 5:
-				return "Director";
-			default:
-				return null;
-		}
+	
+	public boolean account (String id, String password) {
+		return findById(id).getPassword().equals(password);
 	}
-
-	/**
-	 *
-	 */
+	
 	@Override
-	public void load() {
-		try (FileReader fr = new FileReader("data/employees.txt"); BufferedReader br = new BufferedReader(fr);) {
-
+	public void load () {
+		try (FileReader fr = new FileReader("data/employees.txt"); BufferedReader br = new BufferedReader(fr)) {
+			
 			String line;
 			while ((line = br.readLine()) != null) {
 				String[] data = line.split("/");
-				switch (data[2]) {
-					case "Normal Employee":
-						employees.add(new NormalEmployee(data[0], data[1], baseSalary, Integer.parseInt(data[3])));
+				Integer postion = Integer.parseInt(data[2]);
+				switch (postion) {
+					case 1:
+						employees.add(new NormalEmployee(data[0], data[1], baseSalary, Integer.parseInt(data[3]), data[4]));
 						break;
-					case "Fare Controller":
-						employees.add(new FareController(data[0], data[1], baseSalary, Integer.parseInt(data[3])));
+					case 2:
+						employees.add(new FareController(data[0], data[1], baseSalary, Integer.parseInt(data[3]), data[4]));
 						break;
-					case "Driver":
-						employees.add(new Driver(data[0], data[1], baseSalary, Integer.parseInt(data[3])));
+					case 3:
+						employees.add(new Driver(data[0], data[1], baseSalary, Integer.parseInt(data[3]), data[4]));
 						break;
-					case "Route Manager":
-						employees.add(new RouteManager(data[0], data[1], baseSalary, Integer.parseInt(data[3])));
+					case 4:
+						employees.add(new RouteManager(data[0], data[1], baseSalary, Integer.parseInt(data[3]), data[4]));
 						break;
-					case "Director":
-						employees.add(new Director(data[0], data[1], baseSalary, Integer.parseInt(data[3])));
+					case 5:
+						employees.add(new Director(data[0], data[1], baseSalary, Integer.parseInt(data[3]), data[4]));
 						break;
 					default:
-						break;
+						return;
 				}
 			}
 			br.close();
@@ -366,13 +315,10 @@ public final class Employees extends ArrayList<Employee> implements IFunctions {
 			System.out.println("Error!");
 		}
 	}
-
-	/**
-	 *
-	 */
+	
 	@Override
-	public void save() {
-		try (FileWriter fw = new FileWriter("data/employees.txt"); BufferedWriter bw = new BufferedWriter(fw);) {
+	public void save () {
+		try (FileWriter fw = new FileWriter("data/employees.txt"); BufferedWriter bw = new BufferedWriter(fw)) {
 			for (Employee employee : employees) {
 				bw.write(employee.toString());
 				bw.newLine();

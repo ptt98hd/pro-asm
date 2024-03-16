@@ -1,138 +1,203 @@
 package assignment;
 
-import employee.Employees;
-import java.io.IOException;
 import java.util.Scanner;
-import ticket.Tickets;
 
 public class Assignment {
 
-	public static void main(String[] args) throws IOException {
-		Employees employees = new Employees();
-		Tickets tickets = new Tickets();
-		Scanner scanner = new Scanner(System.in);
-		label:
+	public static void main(String[] args) {
+
+		loop:
 		while (true) {
-			switch (choice(scanner)) {
+			switch (login()) {
 				case 1:
-					employees.add();
-					enter(scanner);
-					break;
 				case 2:
-					employees.update();
-					enter(scanner);
-					break;
 				case 3:
-					employees.remove();
-					enter(scanner);
-					break;
 				case 4:
-					employees.listAll();
-					enter(scanner);
-					break;
 				case 5:
-					employees.listNormalEmployee();
-					enter(scanner);
+					menu();
+					enter();
 					break;
-				case 6:
-					employees.listFareController();
-					enter(scanner);
-					break;
-				case 7:
-					employees.listDriver();
-					enter(scanner);
-					break;
-				case 8:
-					employees.listRouteManager();
-					enter(scanner);
-					break;
-				case 9:
-					employees.listDirector();
-					enter(scanner);
-					break;
-				case 10:
-					employees.searchById();
-					enter(scanner);
-					break;
-				case 11:
-					employees.searchByName();
-					enter(scanner);
-					break;
-				case 12:
-					employees.top5Salary();
-					enter(scanner);
-					break;
-				case 13:
-					employees.top1HighestSalary();
-					enter(scanner);
-					break;
-				case 14:
-					employees.top2LowestSalary();
-					enter(scanner);
-					break;
-				case 15:
-					employees.totalSalary();
-					enter(scanner);
-					break;
-				case 16:
-					tickets.add();
-					enter(scanner);
-					break;
-				case 17:
-					tickets.update();
-					enter(scanner);
-					break;
-				case 18:
-					tickets.remove();
-					enter(scanner);
-					break;
-				case 19:
-					tickets.listAll();
-					enter(scanner);
-					break;
-				case 20:
-					tickets.listNormalTicket();
-					enter(scanner);
-					break;
-				case 21:
-					tickets.listStudentTicket();
-					enter(scanner);
-					break;
-				case 22:
-					tickets.listSeniorTicket();
-					enter(scanner);
-					break;
-				case 23:
-					tickets.listDailyTicket();
-					enter(scanner);
-					break;
-				case 24:
-					tickets.listMonthlyTicket();
-					enter(scanner);
-					break;
-				case 25:
-					tickets.sortByPriceAcd();
-					enter(scanner);
-					break;
-				case 26:
-					tickets.sortByPriceDcd();
-					enter(scanner);
-					break;
-				case 27:
-					tickets.top5LowestPrice();
-					enter(scanner);
-					break;
-				case 28:
-					tickets.totalSold();
-					enter(scanner);
+				case 0:
+					changePassword();
+					enter();
 					break;
 				default:
-					break label;
+					break loop;
 			}
 		}
 	}
 
-	public static int choice(Scanner scanner) {
+	public static int login() {
+		System.out.println("\n[ LOGIN ]");
+		Employees employees = new Employees();
+		String id, password;
+		do {
+			id = Utils.getString("Enter ID: ");
+			if (id.equals("0")) {
+				return 0;
+			}
+			if (employees.findById(id) == null) {
+				System.out.println("Invalid ID, Try again!");
+			}
+		} while (employees.findById(id) == null);
+		do {
+			password = Utils.getString("Enter password: ");
+			if (password.equals("0")) {
+				return 0;
+			}
+			if (!employees.account(id, password)) {
+				System.out.println("Wrong password, Try again!");
+			}
+		} while (!employees.account(id, password));
+		return employees.findById(id).getPosition();
+	}
+
+	public static void changePassword() {
+		System.out.println("\n[ CHANGE PASSWORD ]");
+		Employees employees = new Employees();
+		String id, password;
+		do {
+			id = Utils.getString("Enter ID: ");
+			if (employees.findById(id) == null) {
+				System.out.println("Invalid ID, Try again!");
+			}
+		} while (employees.findById(id) == null);
+		do {
+			password = Utils.getString("Enter Old password: ");
+			if (!employees.account(id, password)) {
+				System.out.println("Wrong password, Try again!");
+			}
+		} while (!employees.account(id, password));
+		employees.findById(id).setPassword(Utils.getString("Enter new password: "));
+		employees.save();
+	}
+
+	public static void menu() {
+		Employees employees = new Employees();
+		Tickets tickets = new Tickets();
+		while (true) {
+			switch (choice()) {
+				case 1:
+					employees.add();
+					enter();
+					break;
+				case 2:
+					employees.update();
+					enter();
+					break;
+				case 3:
+					employees.remove();
+					enter();
+					break;
+				case 4:
+					employees.listAll();
+					enter();
+					break;
+				case 5:
+					employees.listNormalEmployee();
+					enter();
+					break;
+				case 6:
+					employees.listFareController();
+					enter();
+					break;
+				case 7:
+					employees.listDriver();
+					enter();
+					break;
+				case 8:
+					employees.listRouteManager();
+					enter();
+					break;
+				case 9:
+					employees.listDirector();
+					enter();
+					break;
+				case 10:
+					employees.searchById();
+					enter();
+					break;
+				case 11:
+					employees.searchByName();
+					enter();
+					break;
+				case 12:
+					employees.top5Salary();
+					enter();
+					break;
+				case 13:
+					employees.top1HighestSalary();
+					enter();
+					break;
+				case 14:
+					employees.top2LowestSalary();
+					enter();
+					break;
+				case 15:
+					employees.totalSalary();
+					enter();
+					break;
+				case 16:
+					tickets.add();
+					enter();
+					break;
+				case 17:
+					tickets.update();
+					enter();
+					break;
+				case 18:
+					tickets.remove();
+					enter();
+					break;
+				case 19:
+					tickets.listAll();
+					enter();
+					break;
+				case 20:
+					tickets.listNormalTicket();
+					enter();
+					break;
+				case 21:
+					tickets.listStudentTicket();
+					enter();
+					break;
+				case 22:
+					tickets.listSeniorTicket();
+					enter();
+					break;
+				case 23:
+					tickets.listDailyTicket();
+					enter();
+					break;
+				case 24:
+					tickets.listMonthlyTicket();
+					enter();
+					break;
+				case 25:
+					tickets.sortByPriceAcd();
+					enter();
+					break;
+				case 26:
+					tickets.sortByPriceDcd();
+					enter();
+					break;
+				case 27:
+					tickets.top5LowestPrice();
+					enter();
+					break;
+				case 28:
+					tickets.totalSold();
+					enter();
+					break;
+				default:
+//					Utils.clearConsole();
+					return;
+			}
+		}
+	}
+
+	public static int choice() {
+		Scanner scanner = new Scanner(System.in);
 		System.out.println("\n[ MENU ]");
 		separator();
 		System.out.printf(
@@ -182,7 +247,7 @@ public class Assignment {
 			"| %-30s | %-30s |%n", "[14] Top 2 Lowest Salary", ""
 		);
 		System.out.printf(
-			"| %-30s | %-30s |%n", "[15] Total Salary", ""
+			"| %-30s | %-30s |%n", "[15] Total Salary", "[00] LOGOUT"
 		);
 		separator();
 		int choice = -1;
@@ -197,18 +262,16 @@ public class Assignment {
 		return choice;
 	}
 
-	public static void enter(Scanner scanner) {
-		System.out.print("Press [Enter] to continute...");
-		try {
-			scanner.nextLine();
-		} catch (Exception e) {
-		}
-	}
-
 	public static void separator() {
 		System.out.printf(
 			"+-%-30s-+-%-30s-+%n",
 			"------------------------------", "------------------------------"
 		);
+	}
+
+	public static void enter() {
+		Scanner scanner = new Scanner(System.in);
+		System.out.print("Press [Enter] to continute...");
+		scanner.nextLine();
 	}
 }

@@ -1,6 +1,8 @@
 package ticket;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class Ticket implements Serializable {
 	private String id;
@@ -8,6 +10,15 @@ public abstract class Ticket implements Serializable {
 	private String type;
 	private boolean roundTrip;
 	private double price;
+	public static final Map<Integer, String> POSITIONS = new HashMap<>();
+	
+	static {
+		POSITIONS.put(1, "Normal Employee");
+		POSITIONS.put(2, "Fare Controller");
+		POSITIONS.put(3, "Driver");
+		POSITIONS.put(4, "Route Manager");
+		POSITIONS.put(5, "Director");
+	}
 	
 	public Ticket (
 		String id, int route, String type, boolean roundTrip, double price

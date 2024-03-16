@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChatHistory">
+    <chats>
+      <list>
+        <chat>
+          <enhancedContext>
+            <enhancedContext>
+              <remoteRepositories>
+                <list>
+                  <remoteRepository>
+                    <remoteUrl value="github.com/ptt98hd/pro-asm" />
+                  </remoteRepository>
+                </list>
+              </remoteRepositories>
+            </enhancedContext>
+          </enhancedContext>
+          <internalId value="8ba34cc7-efea-4ae0-91e0-286ee1fa634f" />
+        </chat>
+      </list>
+    </chats>
+    <defaultEnhancedContext>
+      <enhancedContext>
+        <remoteRepositories>
+          <list>
+            <remoteRepository>
+              <remoteUrl value="github.com/ptt98hd/pro-asm" />
+            </remoteRepository>
+          </list>
+        </remoteRepositories>
+      </enhancedContext>
+    </defaultEnhancedContext>
+  </component>
+</project>

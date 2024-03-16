@@ -1,9 +1,14 @@
-package ticket;
+package assignment;
 
-import assignment.IFunctions;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
+import ticket.DailyTicket;
+import ticket.MonthlyTicket;
+import ticket.NormalTicket;
+import ticket.SeniorTicket;
+import ticket.StudentTicket;
+import ticket.Ticket;
 
 public final class Tickets implements IFunctions {
 
@@ -26,23 +31,13 @@ public final class Tickets implements IFunctions {
 	@Override
 	public void add() {
 		System.out.println("\n[ ADD A TICKET ]");
-		System.out.print("Enter ID: ");
-		String id = scanner.nextLine();
+		String id = Utils.getString("Enter ID: ");
 		while (findById(id) != null) {
 			System.out.println("ID already exists!");
 			System.out.print("Enter ID: ");
 			id = scanner.nextLine();
 		}
-
-		int route = 0;
-		while (route < 1) {
-			try {
-				System.out.print("Enter route: ");
-				route = Integer.parseInt(scanner.nextLine());
-			} catch (NumberFormatException e) {
-				System.out.println("Invaled route!");
-			}
-		}
+		int route = Utils.getPositiveInt("Enter route: ");
 
 		switch (types()) {
 			case "Normal Ticket":
@@ -225,13 +220,12 @@ public final class Tickets implements IFunctions {
 		tickets.sort((t1, t2) -> Double.compare(t1.getPrice(), t2.getPrice()));
 		Ticket.displayHeader();
 
-		try (
-			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("data/topPrice.dat"))) {
+		try (FileOutputStream fileOut = new FileOutputStream("data/topPrice.dat"); ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);) {
 			for (int i = 0; i < 5; i++) {
 				tickets.get(i).display();
-				oos.writeObject(tickets.get(i));
+				objectOut.writeObject(tickets.get(i));
 			}
-		} catch (Exception e) {
+		} catch (IOException e) {
 		}
 		Ticket.displaySeparator();
 	}
@@ -246,6 +240,12 @@ public final class Tickets implements IFunctions {
 	}
 
 	// == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
+	/**
+	 *
+	 * @param id
+	 * @return
+	 */
+	@Override
 	public Ticket findById(String id) {
 		for (Ticket ticket : tickets) {
 			if (ticket.getId().equals(id)) {

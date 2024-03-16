@@ -1,11 +1,10 @@
-ptc03/pham thanh cong/Route Manager/30
-ndt03/nguyen duy thang/Route Manager/29
-hhn04/hoang hong nhung/Driver/28
-tdt04/tran dinh tu/Driver/27
-ndn04/nguyen danh nhan/Fare Controller/26
-dtt04/dang thi tam/Fare Controller/25
-txd04/tran xuan dong/Normal Employee/14
-tta04/tran thu an/Normal Employee/7
-lqt03/luong quang thang/Normal Employee/5
-ttl74/tran thi loan/Route Manager/1
-ptt98/pham trung thanh/Director/60
+ptt98/pham trung thanh/5/60/1235
+ptc03/pham thanh cong/4/50/null
+ndn04/nguyen danh nhan/4/40/null
+hhn04/hoang hong nhung/2/35/null
+ddt04/dang thi tam/2/30/ddt04
+nta04/nguyen thu an/2/32/null
+txd04/tran xuan dong/3/35/null
+lqt03/luong quang thang/3/32/null
+nnq04/nguyen van quan/3/30/null
+0000/0000/1/0/null
